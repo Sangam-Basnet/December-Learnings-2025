@@ -1,0 +1,64 @@
+1) Convolutional Neural Network:
+A CNN model, is a type of deep learning algorithm designed to process grid-like data such as images tasks like classification and object detection. It uses layers that include convolution, pooling, and fullly connected 
+layers to extract features, reduce dimensionality, and ultimately classify the data. These Networks are highly effective for computer vision and are also used for other applications like image categorization .
+
+
+2) RGB and Gray scale images in CNN:
+-RGB images are represented as 3-channel tensors(or NumPy arrays) where each channel corresponds to the Red, Green, and Blue color components. The shape typically is (height, width, 3) or (3, height, width).
+-RGB images contain richer color information, which can be crucial for tasks color patterns are important for object recognition, classification, or segmentation. (e.g, autonomous vechiles, video survillence).
+-processing 3 channels requires more computational resources compared to single-channel grayscale images.
+-Convolution filters in a CNN must have a depth matching the number of input channels. For RGB images, filters will be 3-dimensional.
+
+-Grayscale images are reoresented as single-channel tensors, where each pixel value indicates the intensity of light. Shape->(height, width, 1) OR (1, height, width).
+-Grayscale images primarily capture intensity, edges, and textures, making them suiteble for tasks where color information is less critical or even redundant.(e.g, medical imaging, document analysis).
+-computational requirenments significantly low, leading to faster training and inference, and lower memor usage.Filter will be 1-dimensional.
+
+Choosing between RGB and Grayscale:
+-> For tasks requiring rich color-based features, RGB is preferred. For tasks focusing on shape, texture, and intensity, grayscale can be sufficient and more efficient.
+-> If compuatational resources are limited or real-time processing is required, grayscale images offer a significant advantage.
+-> some datasets may inherently benefit more from color information, while others may perform equally well or even better with grayscale images, especially if color introduces noise or irrelevant variations.
+->When using pre-trained models designed for RGB inputs, grayscale images can be replicated across three channels to match the input dimensions, although this may not fully leverage the benefits of grayscale.
+
+
+3) Convolution Operation in CNN:
+Convolution operation combines an input image with a convolution kernel(filter) to produce a new "feature map".This is done by sliding the kerne over the image, performing a dot product at each location to generate
+a single output value. This process extracts features like edges and patterns, with the kernel's weights being learned during training to identify important information automatically.
+process:
+i. Sliding window : A small matrix called a filter slides over the input image, or feture map.
+ii. Element-wise multiplication: At each position, the filters values are multiplied with the corresponding pixel vlaues in the portion of the image it is covering.
+iii. Summation: All the results from the multiplication are summed to produce a single output value for that position.
+iv. Output feature map: This output value is places into a new matrix, called the output feature map, which represents the presence and strength of a specific feature in that area.
+v. Repeat: The filter continues to slide across the entire image, repeating the multiplication and summation process until it has covered all possible locations.
+
+-> Feature detection: Filters are designes to detect specific features, such as vertical or horizontal edges, corners, or more complex patterns.
+-> Parameter sharing: The same kernel is used across the entire input image, reducing the number of trainable parameters and making the model more efficient.
+-> Location parameters: Because the same filter is applied everywhere, the network can recognize a feature regardless of where it appears in the image.
+-> Learned parameters: In a CNN, the values in the kernel are learned and adjusted during the training process to automatically extract the most useful features for the task at hand.
+
+
+4) Padding in CNN:
+It is the process of adding a border of pixels around an image's edges before applying an convolution filter.
+-> Prevents shrinking: without padding, the output of a convolution is smaller than the input. With repeated convolutions, the spatial size would decrease significantly,
+   potentially leading to the loss of informaation at the borders.
+-> Preserves border information: Convolution filters are less likely to focus on the pixels at the very edges compared to the center pixels.
+   Padding ensures that border pixels are processed more throughly, leading to a more accurate feature extraction.
+-> Maintains spatial dimensions: By adding padding, it is possible to ensure the output feature map has the same height and width as the input, a setting known as "same" padding.
+
+
+5) Pooling layers in CNN:
+Max, min, and mean pooling are types of pooling layers in a CNN that downsample a feature map by applying an operation (max, min, or average) over a defined window or patch.
+-> Max pooling selects the highest value, preserving strong features,
+-> mean pooling calculates the average, resulting in a smoother output. 
+->Min pooling selects the minimum value, which is less common but can be useful for specific tasks like anomaly detection. 
+
+
+6) Fully connected layer in CNN:
+A fully Connected (FC) layer in CNN is a standard neural network layer typically placed at the end of the architecture to perform classification. Every neuron in the FC layer is connected to every 
+neuron in the previous layer.
+working:
+-> Flattening: The ooutput of the last convolutional or pooling layer, which is a 3D feature map, is flattened into a single, long vector.
+-> Dense connectivity: This !D vector is fed into the FC layer, where each neron is connected to every neuron in the previous layer.
+-> Weighted connections: Each connection between neurons has a weight. The layer learns the best weights during training to associate the features with the correct classes.
+-> Output: The final FC layer's output neurons typically use an activation function like softmax for multi'-class classification or sigmoid for binary classification to produce the final probabilities for each class.
+
+Without the FC layers, a CNN would be unable to perform classification. They are crucial for translating the learned features into a final class prediction.
